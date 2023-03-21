@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import {addUser} from "../../Api/Api";
 import { Image, ToastAndroid,ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import auth from '@react-native-firebase/auth';
 const Register = ()=>{
     const[name,setName]= React.useState("")
     const[id,setId]= React.useState("")

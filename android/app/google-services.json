@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "192271953478",
+    "project_id": "reactnative-99df2",
+    "storage_bucket": "reactnative-99df2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192271953478:android:dd730caccf3f3e4d1ee447",
+        "android_client_info": {
+          "package_name": "com.cheat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192271953478-tka2uusigo8fh9j5032qnlgf8h4dv3i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cheat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "192271953478-c4kjf5eji22k3te4imjtv6a7tve1masm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8XFKqoBtZ4V_pZ4MiRDZD7LgRhptXCyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192271953478-c4kjf5eji22k3te4imjtv6a7tve1masm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

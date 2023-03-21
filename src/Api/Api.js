@@ -1,3 +1,5 @@
+import auth from '@react-native-firebase/auth';
+import {ToastAndroid} from  "react-native"
 export function Item123(){
     
         const requestOptions = {
@@ -104,23 +106,44 @@ export function onGrid(){
 }
 
 export function addUser(value){
+
+    auth()
+    .createUserWithEmailAndPassword(value.mail, value.passowrd)
+    .then(() => {
+        
+    ToastAndroid.show("User account created  !", ToastAndroid.SHORT)
+    })
+    .catch(error => {
+      if (error.code === 'auth/email-already-in-use') {
+        ToastAndroid.show("That email address is already in use  !", ToastAndroid.SHORT)
+      }
+  
+      if (error.code === 'auth/invalid-email') {
+        ToastAndroid.show("hat email address is invalid!", ToastAndroid.SHORT)
+      }
+      else{
+        ToastAndroid.show("error", ToastAndroid.SHORT)
+      }
+      
+    //   console.error(error);
+    })
     console.log(value)
-    const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body:JSON.stringify({
-            name:value.name,
-            email:value.mail,
-           password:value.passowrd,
-           address:value.address,
-           type:value.userType
-        })
-    };
-    const data = fetch('http://10.0.2.2:8080/customer/addUser', requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body:JSON.stringify({
+    //         name:value.name,
+    //         email:value.mail,
+    //        password:value.passowrd,
+    //        address:value.address,
+    //        type:value.userType
+    //     })
+    // };
+    // const data = fetch('http://10.0.2.2:8080/customer/addUser', requestOptions)
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    // return data
 }
 
 export function AddBills(value){
