@@ -12,9 +12,23 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/core";
+import {AddPayment} from "../../../Api/Api";
 
-const PaymentSub = () => {
+const PaymentSub = ({ route }) => {
+    console.log(route.params.fileds)
     const naviation=useNavigation();
+    const [fileds,setFields]=React.useState({})
+    
+    function  handleChange(e,value){
+        fileds[value]=e
+        setFields(fileds)
+        console.log(fileds)
+    }
+    function post() {
+        console.log(route.Amount)
+        AddPayment(fileds,route.params.fileds)
+    }
+    // console.log(route.params.data)
     return (
         <ScrollView>
      <View> 
@@ -23,26 +37,28 @@ const PaymentSub = () => {
             </View>
             
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="Card Type"/>
+                    <TextInput style={styles.textInput} placeholder="Payment Type" onChangeText={e => handleChange(e,"type")}/>
             </View>
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="Card Number"/>
+                    <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={e => handleChange(e,"number")}/>
             </View>
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="CVC"/>
+                    <TextInput style={styles.textInput} placeholder="CVC"onChangeText={e => handleChange(e,"cvc")}/>
             </View>
             <TouchableOpacity>
                         <TextInput
                              style={styles.textInput}
-                             placeholder={"Expiration Month: "+new Date('2018-05-18T04:00:00Z').toLocaleString()}
+                             placeholder={"Date: "+new Date('2018-05-18T04:00:00Z').toLocaleString() }
+                             onChangeText={e => handleChange(e,"expire")}
                         />
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
                         <TextInput
                              style={styles.textInput}
                              placeholder={"Expiration Year: "+new Date('2018-05-18T04:00:00Z').toLocaleString()}
+                             onChangeText={e => handleChange(e,"cvcc")}
                         />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View>
             <View style={{margin:10, flexDirection: 'row'}}>
             <TouchableOpacity style={styles.defaultButton1} onPress={()=>{naviation.navigate("PaymentMain")}}>
@@ -50,7 +66,7 @@ const PaymentSub = () => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.defaultButton1}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Proceed</Text>
+                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}} onPress={()=>{post()}}>Proceed</Text>
             </TouchableOpacity>
             </View>
             </View>

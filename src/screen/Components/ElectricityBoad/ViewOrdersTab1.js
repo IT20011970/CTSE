@@ -11,51 +11,71 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {getMeterOrder} from "../../../Api/Api";
+import { getMeterOrder } from "../../../Api/Api";
 import { useNavigation } from "@react-navigation/core";
 
 const ViewOrders = () => {
-    const naviation=useNavigation();
-    const [complain, setComplain] =React.useState([])
+    const naviation = useNavigation();
+    const [complain, setComplain] = React.useState([])
     var data;
-    React.useEffect(()=>{
+    React.useEffect(() => {
         f()
-       },[])
-       async function f(){
-                getMeterOrder(data).then(r=> setComplain(r));
+    }, [])
+    async function f() {
+        try {
+            const data = await getMeterOrder(data)
+            data.on('value', querySnapshot => {
+                const todos = []
+                data.on('value', querySnapshot => {
+                    const todos = []
+                    querySnapshot.forEach((doc) => {
+                        todos.push({
+                            type: doc.val().type, 
+                            description: doc.val().description,
+                            address: doc.val().address
+                        })
+                    })
+                    setComplain(todos)
+                })
+            })
+        }
+        catch {
+
+        }
     }
     return (
         <ScrollView>
-        <View>
-              <View style={styles.container}>
-                <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')}/>
-            </View>
-            {
-            complain && complain.map((complain, key) => {
-                return (<>
-             <View style={styles.card}>
-                <View style={{ flexDirection: 'column',  padding: 5, marginTop: 5 }}>
-                <View style={{alignItems:'flex-start'}}>
-                <Text style={{ flex: 1,fontSize: 14,fontWeight:'600'}}>Number of Orders: 3</Text>
-                <Text style={styles.HraderStyle}>{complain.address} District | {complain.address}</Text>
+            <View>
+                <View style={styles.container}>
+                    <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')} />
                 </View>
-                <View style={{alignItems:'flex-end',marginTop:-30}}>
-                     <TouchableOpacity onPress={()=>{naviation.navigate("ViewOrder2")}}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
-                     </TouchableOpacity>
-                </View>
+                {
+                    complain && complain.map((complain, key) => {
+                        return (<>
+                            <View style={styles.card}>
+                                <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                                    <View style={{ alignItems: 'flex-start' }}>
+                                        <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }}>Orders</Text>
+                                        <Text style={styles.HraderStyle}>Type |{complain.type} Description | {complain.description}</Text>
+                                    </View>
+                                    <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
+                                        <TouchableOpacity onPress={() => { naviation.navigate("ViewOrder2") }}>
+                                            <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login" size={30} color="black" /></Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+
+                        </>)
+                    })
+                }
+
+
+
+
             </View>
-            </View>
-
-                </>)})
-            }
-           
-          
-
-
-        </View>
         </ScrollView>
-        
+
     );
 }
 
@@ -68,28 +88,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        fontSize:20,
-    },defaultButton1:{
-        padding:15,
-        width:'25%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+        fontSize: 20,
+    }, defaultButton1: {
+        padding: 15,
+        width: '25%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },defaultButton3:{
-        padding:15,
-        width:'10%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+    }, defaultButton3: {
+        padding: 15,
+        width: '10%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },textInput:{
-        padding:10,
+    }, textInput: {
+        padding: 10,
         margin: 10,
-        fontSize:16,
-        borderWidth:1,
-        borderColor:"#a7a7a7",
-        borderRadius:10
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: "#a7a7a7",
+        borderRadius: 10
     },
-    card:{
+    card: {
         justifyContent: 'center',
         margin: 10,
         backgroundColor: '#fff',
@@ -99,30 +119,30 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
     },
-    defaultButton2:{
-        padding:15,
-        width:'25%',
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:"#0091D5",
+    defaultButton2: {
+        padding: 15,
+        width: '25%',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#0091D5",
         marginLeft: 1,
-    },  defaultButton3:{
-        padding:15,
-        width:'15%',
-        borderRadius:50,
-        borderWidth:1,
-        borderColor:"#0091D5",
+    }, defaultButton3: {
+        padding: 15,
+        width: '15%',
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: "#0091D5",
         marginLeft: 1
-    },container: {
+    }, container: {
         flexDirection: 'row',
         justifyContent: 'center',
         margin: 10,
-    },HraderStyle: {
+    }, HraderStyle: {
         flex: 1,
         fontSize: 12,
-    },defaultBg:{
-        width:'100%',
-        height:120
+    }, defaultBg: {
+        width: '100%',
+        height: 120
     },
 });
 

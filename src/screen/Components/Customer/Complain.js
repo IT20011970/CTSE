@@ -23,6 +23,7 @@ const Complain = () => {
     React.useEffect(()=>{
         f()
        })
+  
        async function f(){
         try {
             const value = await  AsyncStorage.getItem('fields')
@@ -39,6 +40,10 @@ const Complain = () => {
     function  handleChange(e,value){
         fileds[value]=e
         setFields(fileds)
+        console.log(fileds)
+    }
+    function  emptyField(){
+        setFields(()=>{return{}})
         console.log(fileds)
     }
 
@@ -87,7 +92,7 @@ const Complain = () => {
                  <TouchableOpacity style={{flex:1}} onPress={()=>{naviation.navigate("Complaintab2")}}>
                             <Text style={{color:"#4287f5",fontSize:16,fontWeight:'bold'}} >View Complaints</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{emptyField()}}>
                             <Text style={{color:"#4287f5",fontSize:16,fontWeight:'bold'}}>Next Complaints</Text>
                     </TouchableOpacity>
             </View>

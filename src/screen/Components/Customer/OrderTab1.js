@@ -48,8 +48,8 @@ const OrderTab1 = () => {
     }
 
     function post() {
-        console.log(name)
-        Products(fileds,name).then()
+        // console.log(name)
+        Products(fileds,name)
 
     }
     return (
@@ -68,7 +68,6 @@ const OrderTab1 = () => {
             </TouchableOpacity>
             </View>
         
-        
             <View style={styles.formInput}>
                     <TextInput style={styles.textInput} placeholder="Item" onChangeText={e => handleChange(e,"description")}/>
             </View>
@@ -82,8 +81,9 @@ const OrderTab1 = () => {
                     <View style={styles.select}>
                         <Picker onValueChange={e=>handleChange(e,"connection")}>
                               <Picker.Item label="Connection Type" value=""/>
-		                      <Picker.Item label="Html" value="html" />
-		                    <Picker.Item label="Javascript" value="javascript"/>
+		                      <Picker.Item label="Hybrid" value="Hybrid" />
+		                    <Picker.Item label="On Grid" value="OnGrid"/>
+                            <Picker.Item label="Off Grid" value="OffGrid"/>
                       </Picker>
                     </View>
               

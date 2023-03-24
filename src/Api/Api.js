@@ -1,5 +1,7 @@
-import auth from '@react-native-firebase/auth';
+import {auth,getAuth,createUserWithEmailAndPassword} from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import {ToastAndroid} from  "react-native"
+import React from 'react';
 export function Item123(){
     
         const requestOptions = {
@@ -16,15 +18,33 @@ export function Item123(){
 
 export function getData(name){
     
-    const requestOptions = {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-    };
-    const data = fetch('http://10.0.2.2:8080/customer/getUser/'+name, requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+    var todos = []
+   const d= database().ref().child('Complain')
+    //   return todos
+    //   console.log(d)
+   return d
+    //   setTodos(todos)
+ 
+    
+    // const requestOptions = {
+    //     method: 'GET',
+    //     headers: {'Content-Type': 'application/json'}
+    // };
+    // const data = fetch('http://10.0.2.2:8080/customer/getUser/'+name, requestOptions)
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    // return console.log(d)
+}
+
+
+export function getPayment(name){
+    
+    var todos = []
+   const d= database().ref().child('Payment/')
+
+   return d
+
 }
 
 export function getAllComplain(name){
@@ -68,15 +88,10 @@ export function geItems(){
 
 export function getMeterOrder(){
     
-    const requestOptions = {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-    };
-    const data = fetch('http://10.0.2.2:8080/electricity/getMeterOrder/', requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+    var todos = []
+    const d= database().ref().child('Meters/')
+ 
+    return d
 }
 
 export function getCurReq(){
@@ -106,9 +121,10 @@ export function onGrid(){
 }
 
 export function addUser(value){
-
-    auth()
-    .createUserWithEmailAndPassword(value.mail, value.passowrd)
+    // Firebase.auth.currentUser
+    const auth = getAuth()
+    
+    createUserWithEmailAndPassword(auth,value.mail, value.passowrd)
     .then(() => {
         
     ToastAndroid.show("User account created  !", ToastAndroid.SHORT)
@@ -127,6 +143,7 @@ export function addUser(value){
       
     //   console.error(error);
     })
+   
     console.log(value)
     // const requestOptions = {
     //     method: 'POST',
@@ -179,24 +196,50 @@ export function login(value){
         })
     return data
 }
-
+export function AddOrderAditional(value,name){
+    const ref=database().ref().child(`Meters/${name}`)
+        ref.update({
+            TransCapacity:value.description,
+            distance:value.distance,
+            ReqCapacity:value.ReqCapacity
+        })
+    }
 export function AddComplain(value,name){
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body:JSON.stringify({
+    const ref=database().ref().child(`Complain/`)
+        ref.push({
+            to:value.To,
+            complaintType:value.type,
+            complain:value.Complain
+        })
+    // const requestOptions = {
+    //     method: 'PUT',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body:JSON.stringify({
 
-        to:value.To,
-        complaintType:value.type,
-        complain:value.Complain
+    //     to:value.To,
+    //     complaintType:value.type,
+    //     complain:value.Complain
             
+    //     })
+    // };
+    // const data = fetch('http://10.0.2.2:8080/customer/complain/'+name, requestOptions)
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    // return data
+}
+
+export function AddPayment(value,name){
+    const ref=database().ref().child(`Payment/`)
+        ref.push({
+            Amount: name.Amount, 
+            NIC: name.NIC,
+            cvc: value.cvc, 
+            expire: value.expire, 
+            number: value.number,
+            type: value.type
         })
-    };
-    const data = fetch('http://10.0.2.2:8080/customer/complain/'+name, requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+  
 }
 
 export function Estimated(value,name){
@@ -219,41 +262,40 @@ export function Estimated(value,name){
 }
 
 export function Products(value,name){
-    console.log(value)
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body:JSON.stringify({
-             agent:value.agent,
-             qty:value.qty,
-             connectionType:value.connection,
-             description:value.description  
-        })
-    };
-    const data = fetch('http://10.0.2.2:8080/customer/products/'+name, requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+
+    const ref=database().ref().child(`SolarProducts/`)
+    ref.push({
+        description: value.description, 
+        agent: value.agent,
+        qty: value.qty, 
+        connection: value.connection, 
+    })
+    // console.log(value)
+    // const requestOptions = {
+    //     method: 'PUT',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body:JSON.stringify({
+    //          agent:value.agent,
+    //          qty:value.qty,
+    //          connectionType:value.connection,
+    //          description:value.description  
+    //     })
+    // };
+    // const data = fetch('http://10.0.2.2:8080/customer/products/'+name, requestOptions)
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    // return data
 }
 
 
 export function Meters(value,name){
-    console.log(value)
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body:JSON.stringify({
-             qty:1,
-             meterType:value.type,
-             description:value.description  
-        })
-    };
-    const data = fetch('http://10.0.2.2:8080/customer/meters/'+name, requestOptions)
-        .then(response => {
-            return response.json()
-        })
-    return data
+    const ref=database().ref().child(`Meters/`)
+    ref.push({
+        type: value.type, 
+        description: value.description,
+        address: value.address, 
+    })
 }
 
 export function AddItem(value){

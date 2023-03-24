@@ -49,7 +49,7 @@ const OrderTab2 = () => {
 
     function post() {
         console.log(name)
-        Meters(fileds,name).then()
+        Meters(fileds,name)
         
     }
     return (

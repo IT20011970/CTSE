@@ -11,11 +11,24 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import {AddOrderAditional} from "../../../Api/Api";
 import { useNavigation } from "@react-navigation/core";
 const ViewOrdersTab3 = ({ route }) => {
-    const { navigate } = route.params;
-    console.log(navigate)
+    // const { navigate } = route.params;
+    console.log(route.params.complain.key)
+    const [fileds, setFields] =React.useState({})
     const naviation=useNavigation();
+    
+    function  handleChange(e,value){
+        fileds[value]=e
+        setFields(fileds)
+        console.log(fileds)
+    }
+    function post() {
+        console.log("name")
+        AddOrderAditional(fileds,route.params.complain.key)
+        naviation.navigate("ViewOrder4")
+    }
     return (
         <ScrollView>
          <View style={styles.container}>
@@ -30,39 +43,40 @@ const ViewOrdersTab3 = ({ route }) => {
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Transformer Capacity</Text>
-       <Text style={styles.HraderStyle}>:05</Text>
+       <TextInput style={styles.textInput} placeholder="Item" onChangeText={e => handleChange(e,"description")}/>
+                        
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Distance</Text>
-       <Text style={styles.HraderStyle}>:06</Text>
+       <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"distance")} />
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Required Capacity</Text>
-       <Text style={styles.HraderStyle}>:10</Text>
+       <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"ReqCapacity")}/>
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Type of Solar Meter</Text>
-       <Text style={styles.HraderStyle}>:Ongrid</Text>
+       {/* <TextInput style={styles.textInput}  /> */}
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Customer Name</Text>
-       <Text style={styles.HraderStyle}>:{navigate.customer}</Text>
+       <Text style={styles.HraderStyle}>:{}</Text>
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Email</Text>
-       <Text style={styles.HraderStyle}>:{navigate.email}</Text>
+       <Text style={styles.HraderStyle}>:{}</Text>
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Address</Text>
-       <Text style={styles.HraderStyle}>:{navigate.address}</Text>
+       <Text style={styles.HraderStyle}>:{}</Text>
 </View>
 </View>
 
  
 
             <View style={{margin:10, flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.defaultButton1} onPress={()=>{naviation.navigate("ViewOrder4")}}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Accept</Text>
+                    <TouchableOpacity style={styles.defaultButton1} onPress={e=>{ post()}}>
+                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Sumbit</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.defaultButton1} onPress={()=>{naviation.navigate("ViewOrder1")}}>
                         <Text style={{textAlign:'center',fontSize:16,color:'#fff'}} >Decline</Text>
@@ -97,8 +111,9 @@ const styles = StyleSheet.create({
         marginLeft: 1
     },textInput:{
         padding:10,
-        margin: 10,
+        marginTop:-10,
         fontSize:16,
+        width:200,
         borderWidth:1,
         borderColor:"#a7a7a7",
         borderRadius:10

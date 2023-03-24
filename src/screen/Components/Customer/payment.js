@@ -19,9 +19,11 @@ import PaymentSub from './PaymentSub';
 const Stack1 = createNativeStackNavigator();
 import {getData} from "../../../Api/Api";
 import  AsyncStorage from '@react-native-async-storage/async-storage';
-const Payment = () => {
+
+const  Payment = () => {
     const naviation=useNavigation();
     const [complain, setComplain] =React.useState([])
+    const [fileds,setFields]=React.useState({})
     var data;
     React.useEffect(()=>{
         f()
@@ -43,6 +45,12 @@ const Payment = () => {
         }
     
       
+    }
+
+    function  handleChange(e,value){
+        fileds[value]=e
+        setFields(fileds)
+        console.log(fileds)
     }
 
     return (
@@ -86,15 +94,15 @@ const Payment = () => {
 
         
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} keyboardType="numeric" placeholder="Payment Amount"/>
+                    <TextInput style={styles.textInput} keyboardType="numeric" placeholder="Payment Amount" onChangeText={e => handleChange(e,"Amount")}/>
             </View>
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="NIC"/>
+                    <TextInput style={styles.textInput} placeholder="NIC" onChangeText={e => handleChange(e,"NIC")}/>
                     
             </View> 
              <View style={{alignItems:'flex-end',margin:10}}>
             <TouchableOpacity style={styles.defaultButton1}>
-                        <Text onPress={()=>naviation.navigate("paymentSub")} style={{textAlign:'center',fontSize:16,color:'#fff'}}>Next ></Text>
+                        <Text onPress={()=>naviation.navigate("paymentSub",{ fileds})} style={{textAlign:'center',fontSize:16,color:'#fff'}}>Next ></Text>
             </TouchableOpacity>
             </View>
         </View>
