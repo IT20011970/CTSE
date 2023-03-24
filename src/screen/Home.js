@@ -77,8 +77,8 @@ import CustomerReqNav from './Components/Engineer/CustomerReqNav';
 const Drawer = createDrawerNavigator();
 
 const Home = ({ route }) => {
-  const { navigate } = route.params;
-    const isLoggedIn=navigate
+  // const { navigate } = route.params;
+    const isLoggedIn=3
 
     
     console.log("+++++++"+isLoggedIn+"---")

@@ -12,12 +12,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/core";
-import {getAllComplain} from "../../../Api/Api";
+import {getData} from "../../../Api/Api";
 import  AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ViewComplains = () => {
     const naviation=useNavigation();
-
     const [complain, setComplain] =React.useState([])
     var data;
     React.useEffect(()=>{
@@ -28,10 +27,22 @@ const ViewComplains = () => {
             const value = await  AsyncStorage.getItem('fields')
             if (value !== null) {
                 
-                data =JSON.parse(value).mail;
-                getAllComplain().then(r=> setComplain(r));
-                console.log(complain)
+                // data =JSON.parse(value).mail;
+               const data=await getData(data)
+               data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                        todos.push({
+                            complain: doc.val().complain,
+                            to: doc.val().to,
+                            complaintType:doc.val().com
+                        })
+                })
+                setComplain(todos)
+              })
+                // console.log(data)
             }
+             console.log(complain)
         }
         catch{
 
@@ -50,7 +61,7 @@ const ViewComplains = () => {
                 
                 <View style={styles.card}>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
-                    <Text style={{textAlign:'center',fontSize: 16,fontWeight:'600',flex:1}}>{complain.name}</Text>
+                    <Text style={{textAlign:'center',fontSize: 16,fontWeight:'600',flex:1}}>{complain.complaintType}</Text>
                     <TouchableOpacity style={styles.defaultButton11} onPress={()=>{naviation.navigate("ViewOrder4")}}>
                         <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Resolved</Text>
             </TouchableOpacity>

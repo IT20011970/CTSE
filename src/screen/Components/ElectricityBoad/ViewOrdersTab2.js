@@ -22,7 +22,27 @@ const ViewOrdersTab2 = () => {
         f()
        },[])
        async function f(){
-                getMeterOrder(data).then(r=> setComplain(r));
+        try {
+        const data = await getMeterOrder(data)
+        data.on('value', querySnapshot => {
+            const todos = []
+            data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                    todos.push({
+                        key:doc.key,
+                        type: doc.val().type, 
+                        description: doc.val().description,
+                        address: doc.val().address
+                    })
+                })
+                setComplain(todos)
+            })
+        })
+    }
+    catch{
+
+    }
     }
     return (
         <ScrollView>
@@ -47,11 +67,11 @@ const ViewOrdersTab2 = () => {
                     <Text style={styles.HraderStyle}>:{complain.address}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
-                    <Text style={styles.HraderStyle}>Email</Text>
-                    <Text style={styles.HraderStyle}>:{complain.email}</Text>
+                    <Text style={styles.HraderStyle}>Description</Text>
+                    <Text style={styles.HraderStyle}>:{complain.description}</Text>
             </View>
             <View style={{alignItems:'flex-end',marginTop:-30}}>
-                     <TouchableOpacity onPress={()=>{naviation.navigate("ViewOrder3",{navigate:complain})}}>
+                     <TouchableOpacity onPress={()=>{naviation.navigate("ViewOrder3",{complain})}}>
                         <Text style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
                      </TouchableOpacity>
                 </View>

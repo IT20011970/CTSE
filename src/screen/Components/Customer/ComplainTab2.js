@@ -26,10 +26,22 @@ const ComplainTab2 = () => {
             const value = await  AsyncStorage.getItem('fields')
             if (value !== null) {
                 
-                data =JSON.parse(value).mail;
-                getData(data).then(r=> setComplain(r.complain));
-                console.log("++++++"+complain)
+                // data =JSON.parse(value).mail;
+               const data=await getData(data)
+               data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                        todos.push({
+                            complain: doc.val().complain,
+                            to: doc.val().to,
+                            complaintType:doc.val().com
+                        })
+                })
+                setComplain(todos)
+              })
+                // console.log(data)
             }
+             console.log(complain)
         }
         catch{
 
