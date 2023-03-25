@@ -36,16 +36,16 @@ const CustomerOrderTab2 = ({ route }) => {
                     <Text>:{navigate.email}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
-            <Text style={styles.HraderStyle}>Address</Text>
-                    <Text>:{navigate.address}</Text>
+            <Text style={styles.HraderStyle}>Quantity</Text>
+                    <Text>:{navigate.qty}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
             <Text style={styles.HraderStyle}>Item</Text>
-                    <Text>:{navigate.name}</Text>
+                    <Text>:{navigate.description}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
-            <Text style={styles.HraderStyle}>Bill Amount</Text>
-                    <Text>:{navigate.price}</Text>
+            <Text style={styles.HraderStyle}>Connection</Text>
+                    <Text>:{navigate.connection}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
             {/* <Text style={styles.HraderStyle}>No of Exixting Units</Text>
@@ -57,23 +57,6 @@ const CustomerOrderTab2 = ({ route }) => {
             </View>
         </View>
         
-        <View style={styles.card}>
-            
-        <View style={{flexDirection: 'row' }}>
-        
-                <View style={{flexDirection:'row',margin:10}}>
-                    <View style={{marginRight:100}}>
-                    <Text style={{textAlign:'center'}}>Send Details to the Engineer</Text>
-                    </View>
-                    <TouchableOpacity style={styles.defaultButton}>
-                        <Text style={{textAlign:'center',fontSize:10,color:'#fff'}}>></Text>
-                    </TouchableOpacity>
-                </View>
-            </View>   
-            
-          
-           
-        </View>
               
         </ScrollView>
         

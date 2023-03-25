@@ -10,82 +10,88 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/core";
-import {getData} from "../../../Api/Api";
-import  AsyncStorage from '@react-native-async-storage/async-storage';
+import { getData } from "../../../Api/Api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ComplainTab2 = () => {
-    const naviation=useNavigation();
-    const [complain, setComplain] =React.useState([])
+    const naviation = useNavigation();
+    const [complain, setComplain] = React.useState([])
     var data;
-    React.useEffect(()=>{
+    React.useEffect(() => {
         f()
-       },[])
-       async function f(){
+    }, [])
+
+    async function deleteData(data){
+        console.log(data)
+    }
+    async function f() {
         try {
-            const value = await  AsyncStorage.getItem('fields')
+            const value = await AsyncStorage.getItem('fields')
             if (value !== null) {
-                
+
                 // data =JSON.parse(value).mail;
-               const data=await getData(data)
-               data.on('value', querySnapshot => {
-                const todos = []
-                querySnapshot.forEach((doc) => {
+                const data = await getData(data)
+                data.on('value', querySnapshot => {
+                    const todos = []
+                    querySnapshot.forEach((doc) => {
                         todos.push({
+                            key:doc.key,
                             complain: doc.val().complain,
                             to: doc.val().to,
-                            complaintType:doc.val().com
+                            complaintType: doc.val().complaintType
                         })
+                    })
+                    setComplain(todos)
                 })
-                setComplain(todos)
-              })
                 // console.log(data)
             }
-             console.log(complain)
+            console.log(complain)
         }
-        catch{
+        catch {
 
         }
     }
     return (
         <ScrollView>
-         <View style={styles.container}>
-                <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')}/>
+            <View style={styles.container}>
+                <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')} />
             </View>
-        
+            {
+                complain && complain.map((complain, key) => {
+                    return (<>
+                        <View style={styles.card}>
+                            <TouchableOpacity onPress={() => {deleteData(complain.key)}} style={{ fontSize: 16, fontWeight: '600', marginLeft:300 }}>
+                                <Text><Icon name="delete"  size={20} color="black" /></Text>
+                            </TouchableOpacity>
+                            <Text style={{ flex: 1, fontSize: 16, fontWeight: '600', margin: 10 }}>Complaint #{Math.floor(Math.random() * 10000)}</Text>
+                            <View style={{ flexDirection: 'row', padding: 5, marginTop: 5, borderRadius: 3, margin: 10 }}>
+                                <Text style={styles.HraderStyle}>Description</Text>
+                                <Text style={styles.HraderStyle}>:{complain.complain} </Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', padding: 5, marginTop: 5, borderRadius: 3, margin: 10 }}>
+                                <Text style={styles.HraderStyle}>To</Text>
+                                <Text style={styles.HraderStyle}>: {complain.to}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', padding: 5, marginTop: 5, borderRadius: 3, margin: 10 }}>
+                                <Text style={styles.HraderStyle}>Type</Text>
+                                <Text style={styles.HraderStyle}>: {complain.complaintType}</Text>
+                            </View>
+                        </View>
+                    </>
+                    )
+                })
+            }
 
-        {
-                                complain && complain.map((complain, key) => {
-                                    return (<>
-                                    <View style={styles.card}>
-                                     <Text style={{ flex: 1,fontSize: 16,fontWeight:'600',margin:10}}>Complaint #{Math.floor(Math.random() * 10000)}</Text>
-                                    <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
-                                        <Text style={styles.HraderStyle}>Description</Text>
-                                        <Text style={styles.HraderStyle}>:{complain.complain} </Text>
-                                     </View>
-                                    <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
-                                        <Text style={styles.HraderStyle}>To</Text>
-                                        <Text style={styles.HraderStyle}>: {complain.to}</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
-                                        <Text style={styles.HraderStyle}>Type</Text>
-                                        <Text style={styles.HraderStyle}>: {complain.complaintType}</Text>
-                                    </View>
-                                    </View>
-                                    </>  
-                                    )
-                                })
-                            }
-           
-      
-        <View style={{margin:10, flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.defaultButton1} onPress={()=>{naviation.navigate("Complaintab1")}}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Back</Text>
-                    </TouchableOpacity>
+
+            <View style={{ margin: 10, flexDirection: 'row' }}>
+                <TouchableOpacity style={styles.defaultButton1} onPress={() => { naviation.navigate("Complaintab1") }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Back</Text>
+                </TouchableOpacity>
 
             </View>
         </ScrollView>
-        
+
     );
 }
 
@@ -98,28 +104,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        fontSize:20,
-    },defaultButton1:{
-        padding:15,
-        width:'50%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+        fontSize: 20,
+    }, defaultButton1: {
+        padding: 15,
+        width: '50%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },defaultButton3:{
-        padding:15,
-        width:'10%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+    }, defaultButton3: {
+        padding: 15,
+        width: '10%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },textInput:{
-        padding:10,
+    }, textInput: {
+        padding: 10,
         margin: 10,
-        fontSize:16,
-        borderWidth:1,
-        borderColor:"#a7a7a7",
-        borderRadius:10
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: "#a7a7a7",
+        borderRadius: 10
     },
-    card:{
+    card: {
         justifyContent: 'center',
         margin: 10,
         backgroundColor: '#fff',
@@ -129,30 +135,30 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
     },
-    defaultButton2:{
-        padding:15,
-        width:'50%',
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:"#0091D5",
+    defaultButton2: {
+        padding: 15,
+        width: '50%',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#0091D5",
         marginLeft: 1,
-    },  defaultButton3:{
-        padding:15,
-        width:'15%',
-        borderRadius:50,
-        borderWidth:1,
-        borderColor:"#0091D5",
+    }, defaultButton3: {
+        padding: 15,
+        width: '15%',
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: "#0091D5",
         marginLeft: 1
-    },container: {
+    }, container: {
         flexDirection: 'row',
         justifyContent: 'center',
         margin: 10,
-    },HraderStyle: {
+    }, HraderStyle: {
         flex: 1,
         fontSize: 12,
-    },defaultBg:{
-        width:'100%',
-        height:120
+    }, defaultBg: {
+        width: '100%',
+        height: 120
     },
 });
 

@@ -12,62 +12,72 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/core";
-
+import { getTeam,DeleteData } from "../../../Api/Api";
 const PanelService = () => {
-    const naviation=useNavigation();
+    const naviation = useNavigation();
+    const [complain, setComplain] = React.useState([])
+    React.useEffect(() => {
+        f()
+    }, [])
+    async function f() {
+
+        try {
+            const data = await getTeam()
+            data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.val().value)
+                    todos.push({
+                        Team: doc.key,
+                        Member:doc.val().value
+                    })
+                })
+                setComplain(todos)
+            })
+        }
+        catch {
+
+        }
+
+    }
+    async function deleteData(data){
+        DeleteData(data.Team)
+    }
     return (
         <ScrollView>
-        <View>
-              <View>
-                <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')}/>
-            </View>
-            <View style={styles.card}>
-            <View style={{ flexDirection: 'column',  padding: 5, marginTop: 5 }}>
-                <View style={{alignItems:'flex-start'}}>
-                    <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Kamal</Text>
-                    <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
-                    <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
+            <View>
+                <View>
+                    <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')} />
                 </View>
-                <View style={{alignItems:'flex-end',marginTop:-30}}>
-                     <TouchableOpacity>
-                        <Text style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
-                     </TouchableOpacity>
-                </View>
-            </View>
-            </View>
+                {
+                    complain && complain.map((complain, key) => {
+                        return (<>
+                            <View style={styles.card}>
+                                <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                                    <View style={{ alignItems: 'flex-start' }}>
+                                        <Text style={[styles.HraderStyle, { fontWeight: 'bold', fontSize: 14 }]}>Team Name:{complain.Team}</Text>
+                                        <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
+                                        <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
+                                    </View>
+                                    <View style={{ alignItems: 'flex-end', marginTop: -55 }}>
+                                    <TouchableOpacity onPress={()=>{naviation.navigate("ServicesTab2",{complain})}}>
+                                            <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login" size={30} color="black" /></Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={()=>{deleteData(complain)}}>
+                                            <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}>Delete</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </>
+                        )
+                    })
+                }
+   
 
-            <View style={styles.card}>
-            <View style={{ flexDirection: 'column',  padding: 5, marginTop: 5 }}>
-                <View style={{alignItems:'flex-start'}}>
-                    <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Nimal</Text>
-                    <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
-                    <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
-                </View>
-                <View style={{alignItems:'flex-end',marginTop:-30}}>
-                    <TouchableOpacity>
-                        <Text  onPress={()=>{naviation.navigate("ServicesTab2")}} style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
-                     </TouchableOpacity>
-                </View>
             </View>
-            </View>
-
-            <View style={styles.card}>
-                <View style={{ flexDirection: 'column',  padding: 5, marginTop: 5 }}>
-                    <View style={{alignItems:'flex-start'}}>
-                        <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Sunil</Text>
-                        <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
-                        <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
-                    </View>
-                    <View style={{alignItems:'flex-end',marginTop:-30}}>
-                        <TouchableOpacity>
-                            <Text  onPress={()=>{naviation.navigate("ServicesTab2")}} style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-        </View>
         </ScrollView>
-        
+
     );
 }
 
@@ -80,28 +90,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        fontSize:20,
-    },defaultButton1:{
-        padding:15,
-        width:'25%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+        fontSize: 20,
+    }, defaultButton1: {
+        padding: 15,
+        width: '25%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },defaultButton3:{
-        padding:15,
-        width:'10%',
-        backgroundColor:'#0091D5',
-        borderRadius:10,
+    }, defaultButton3: {
+        padding: 15,
+        width: '10%',
+        backgroundColor: '#0091D5',
+        borderRadius: 10,
         marginLeft: 1
-    },textInput:{
-        padding:10,
+    }, textInput: {
+        padding: 10,
         margin: 10,
-        fontSize:16,
-        borderWidth:1,
-        borderColor:"#a7a7a7",
-        borderRadius:10
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: "#a7a7a7",
+        borderRadius: 10
     },
-    card:{
+    card: {
         justifyContent: 'center',
         margin: 10,
         backgroundColor: '#fff',
@@ -111,30 +121,30 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
     },
-    defaultButton2:{
-        padding:15,
-        width:'25%',
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:"#0091D5",
+    defaultButton2: {
+        padding: 15,
+        width: '25%',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#0091D5",
         marginLeft: 1,
-    // },  defaultButton3:{
-    //     padding:15,
-    //     width:'15%',
-    //     borderRadius:50,
-    //     borderWidth:1,
-    //     borderColor:"#0091D5",
-    //     marginLeft: 1
-    },container: {
+        // },  defaultButton3:{
+        //     padding:15,
+        //     width:'15%',
+        //     borderRadius:50,
+        //     borderWidth:1,
+        //     borderColor:"#0091D5",
+        //     marginLeft: 1
+    }, container: {
         flexDirection: 'row',
         justifyContent: 'center',
         margin: 10,
-    },HraderStyle: {
+    }, HraderStyle: {
         flex: 1,
         fontSize: 12,
-    },defaultBg:{
-        width:'100%',
-        height:70
+    }, defaultBg: {
+        width: '100%',
+        height: 70
     },
 });
 

@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/core";
 import {AddPayment} from "../../../Api/Api";
 
 const PaymentSub = ({ route }) => {
-    console.log(route.params.fileds)
+    console.log(route.params)
     const naviation=useNavigation();
     const [fileds,setFields]=React.useState({})
     
@@ -25,7 +25,7 @@ const PaymentSub = ({ route }) => {
         console.log(fileds)
     }
     function post() {
-        console.log(route.Amount)
+        console.log(route.params)
         AddPayment(fileds,route.params.fileds)
     }
     // console.log(route.params.data)

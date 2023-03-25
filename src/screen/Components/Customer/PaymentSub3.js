@@ -32,9 +32,8 @@ const PaymentSub3 = () => {
                 const todos = []
                 querySnapshot.forEach((doc) => {
                     todos.push({
-                        Amount: doc.val().Amount,
-                        NIC: doc.val().NIC,
-                        cvc: doc.val().cvc,
+                        Amount: doc.val().AnountToPay,
+                        description: doc.val().description,
                         expire: doc.val().expire,
                         number: doc.val().number,
                         type: doc.val().type,
@@ -79,8 +78,8 @@ const PaymentSub3 = () => {
                         complain && complain.map((complain) => {
                             return (<>
                                 <View style={{ flexDirection: 'row', padding: 5, marginTop: 5, backgroundColor: '#F8F8F8', borderRadius: 3, margin: 10 }}>
-                                    <Text style={styles.HraderStyle}>{complain.expire}</Text>
-                                    <Text style={styles.HraderStyle}>{complain.type}</Text>
+                                    <Text style={styles.HraderStyle}>{complain?.expire?complain.expire:new Date().getFullYear()}</Text>
+                                    <Text style={styles.HraderStyle}>{complain.description}</Text>
                                     <Text style={styles.HraderStyle}>{complain.Amount}</Text>
                                 </View>
                             </>
@@ -159,6 +158,11 @@ const styles = StyleSheet.create({
         margin: 10,
     }, HraderStyle: {
         flex: 1,
+        fontSize: 12,
+    },
+    HraderStyle2: {
+        flex: 1,
+        fontWeight:'bold',
         fontSize: 12,
     }
 });

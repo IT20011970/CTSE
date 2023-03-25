@@ -13,12 +13,36 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/core";
-
+import {getPayment} from "../../../Api/Api";
 
 const ManageBillsTab2 = () => {
     const naviation=useNavigation();
- 
+    const [complain, setComplain] = React.useState([])
+    React.useEffect(() => {
+        f()
+    }, [])
+    async function f(){
+            
+        try {
+            const data = await getPayment(data)
+            data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                    console.log(doc)
+                    todos.push({
+                        key:doc.key,
+                        AmountPay: doc.val().AmountPaid,
+                        CustomerNIC: doc.val().customer,
+                        description: doc.val().description
+                    })
+                })
+                setComplain(todos)
+            })
+        }
+        catch {
 
+        }
+    }
     return (<ScrollView>
           <View style={styles.container}>
                 <ImageBackground style={styles.defaultBg} resizeMode={'cover'} source={require('../../../assets/images/auth_bg.png')}/>
@@ -31,26 +55,28 @@ const ManageBillsTab2 = () => {
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,backgroundColor:'rgba(26, 89, 151, 0.07)', borderRadius : 3 ,margin:10}}>
                     <Text style={styles.HraderStyle}>Customer ID</Text>
                     <Text style={styles.HraderStyle}>Amount</Text>
+                    <Text style={styles.HraderStyle}>Status</Text>
             </View>
-            <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,backgroundColor:'#F8F8F8', borderRadius : 3 ,margin:10}}>
-                    <Text style={styles.HraderStyle}>C-123</Text>
-                    <Text style={styles.HraderStyle}>1000W</Text>
-                    <View style={{backgroundColor:'yellow',borderRadius:4}}>
-                    <Text style={styles.HraderStyle}>Unpaid</Text>
+            {
+                complain && complain.map((complain, key) => {
+                    return (<>
+            <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
+                    <Text style={styles.HraderStyle}>{complain.CustomerNIC}</Text>
+                    <Text style={styles.HraderStyle}>{complain?.AmountPay?complain.AmountPay:"0"}</Text>
+                    <View style={{borderRadius:4}}>
+                    <Text style={styles.HraderStyle}>{complain?.AmountPay?"Paid":"Unpaid"}</Text>
                    </View>    
             </View>
-            <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,backgroundColor:'#F8F8F8', borderRadius : 3 ,margin:10}}>
-                    <Text style={styles.HraderStyle}>C-124</Text>
-                    <Text style={styles.HraderStyle}>1000W</Text>
-                    <View style={{backgroundColor:'#0CE922',borderRadius:4}}>
-                    <Text style={styles.HraderStyle}>paid</Text>
-                   </View> 
-            </View>
+            </>
+                    )
+                })
+            }
+         
         </View>
 
             <View style={{margin:10, flexDirection: 'row'}}>
                     <TouchableOpacity style={styles.defaultButton1}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Back</Text>
+                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}} onPress={()=>{naviation.navigate("ManageBills1")}}>Back</Text>
                     </TouchableOpacity> 
             </View>
         </ScrollView>

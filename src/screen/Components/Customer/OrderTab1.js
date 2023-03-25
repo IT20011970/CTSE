@@ -7,6 +7,7 @@ import {
     StyleSheet,
     Text,
     TextInput,
+    ToastAndroid,
     TouchableOpacity,
     View
 } from 'react-native';
@@ -31,8 +32,7 @@ const OrderTab1 = () => {
        async function f(){
         try {
             const value = await  AsyncStorage.getItem('fields')
-            if (value !== null) {
-                
+            if (value !== null) {   
                 const data =JSON.parse(value).mail;
                 setName(data)
             }
@@ -48,8 +48,35 @@ const OrderTab1 = () => {
     }
 
     function post() {
-        // console.log(name)
-        Products(fileds,name)
+        console.log(fileds.agent)
+        if(fileds.agent==""){
+            ToastAndroid.show("Please Fill Agent!", ToastAndroid.SHORT)
+        }
+        if(fileds.description==""){
+            ToastAndroid.show("Please Fill Description!", ToastAndroid.SHORT)
+        }
+        if(fileds.qty==""){
+            ToastAndroid.show("Please Fill Quantity!", ToastAndroid.SHORT)
+        }
+        if(fileds.connection==""){
+            ToastAndroid.show("Please Select Type!", ToastAndroid.SHORT)
+        }
+        if(isNaN(+fileds.qty)){
+            ToastAndroid.show("Please Select Typeaa!", ToastAndroid.SHORT)
+        }
+        else{
+            try{
+                Products(fileds,name)
+                ToastAndroid.show("Success", ToastAndroid.SHORT)
+            }
+            catch(e)
+            {
+                ToastAndroid.show(e, ToastAndroid.SHORT)
+            }
+
+        }
+        
+        // Products(fileds,name)
 
     }
     return (
@@ -75,7 +102,7 @@ const OrderTab1 = () => {
                     <TextInput style={styles.textInput} placeholder="Sales Agent" onChangeText={e => handleChange(e,"agent")}/> 
             </View> 
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="Quantity" onChangeText={e => handleChange(e,"qty")}/> 
+                    <TextInput style={styles.textInput} keyboardType='numeric' placeholder="Quantity" onChangeText={e => handleChange(e,"qty")}/> 
             </View> 
         
                     <View style={styles.select}>

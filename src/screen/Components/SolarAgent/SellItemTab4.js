@@ -14,12 +14,22 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/core";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import {UpdateItem} from "../../../Api/Api";
 
 const Stack1 = createNativeStackNavigator();
 
-const SellItemTab4 = () => {
+const SellItemTab4 = ({ route }) => {
     const naviation=useNavigation();
+    const [fileds,setFields]=React.useState({})
+    function  handleChange(e,value){
+        fileds[value]=e
+        setFields(fileds)
+        console.log(fileds)
+    }
+    console.log( route.params )
+    function post() {
+        UpdateItem(fileds,route.params)
+    }
     return (
         <ScrollView>
         <View> 
@@ -42,22 +52,22 @@ const SellItemTab4 = () => {
            
 
             <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="Item Name"/>
+                    <TextInput style={styles.textInput} placeholder="Item Name" onChangeText={e => handleChange(e,"name")}/>
                 </View>
                 <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="Price"/>
+                    <TextInput style={styles.textInput} placeholder="Price"onChangeText={e => handleChange(e,"price")}/>
                 </View>
                 <View style={styles.select}>
                 
                 </View>
                 <View style={styles.formInput}>
-                <TextInput style={styles.textInput} placeholder="Quantity" secureTextEntry={true}/>
+                <TextInput style={styles.textInput} placeholder="Quantity" secureTextEntry={true} onChangeText={e => handleChange(e,"qty")}/>
                 </View>
                 <View style={styles.formInput}>
-                <TextInput style={styles.textInput} placeholder="Description" secureTextEntry={true}/>
+                <TextInput style={styles.textInput} placeholder="Description" secureTextEntry={true} onChangeText={e => handleChange(e,"description")}/>
                 </View>
                 <View style={{margin:10,alignItems:'center'}}>
-                    <TouchableOpacity style={styles.defaultButton1} onPress={()=>{naviation.navigate("ViewOrderTab3")}}>
+                    <TouchableOpacity style={styles.defaultButton1} onPress={()=>{post()}}>
                         <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Update</Text>
                     </TouchableOpacity>
                 </View>

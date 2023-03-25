@@ -10,8 +10,8 @@ const PanelRepairsNav = ()=>{
     return (
     <NavigationContainer independent={true}>
         <Stack1.Navigator>
-        <Stack1.Screen options={{headerShown:false}} name="Repairs" component={Repairs}  />
         <Stack1.Screen options={{headerShown:false}} name="PanelRepairs" component={PanelRepairsTab2} />
+        {/* <Stack1.Screen options={{headerShown:false}} name="Repairs" component={Repairs}  /> */}
         </Stack1.Navigator> 
     </NavigationContainer>
     )

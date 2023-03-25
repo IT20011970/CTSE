@@ -11,77 +11,80 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {useNavigation} from "@react-navigation/core";
-import {getCurReq} from "../../../Api/Api";
+import { useNavigation } from "@react-navigation/core";
+import { getData, getSolarData } from "../../../Api/Api";
 const CustomerRequirements = () => {
     const naviation = useNavigation();
-    const [complain, setComplain] =React.useState([])
-    var data;
-    React.useEffect(()=>{
+    const [complain, setComplain] = React.useState([])
+    React.useEffect(() => {
         f()
-       },[])
-       async function f(){
-       
-        getCurReq().then(r=> setComplain(r));
-                
+    }, [])
+
+    async function f() {
+        const data = await getSolarData(data)
+        try {
+            data.on('value', querySnapshot => {
+                const todos = []
+                console.log(querySnapshot)
+                querySnapshot.forEach((doc) => {
+                    todos.push({
+                        key: doc.key,
+                        qty: doc.val().qty,
+                        description: doc.val().description,
+                        connection: doc.val().connection,
+                        agent:doc.val().agent
+                    })
+                })
+                setComplain(todos)
+            })
+        }
+        catch {
+
+        }
+
     }
     return (
 
         <View>
             <View>
                 <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
-                                 source={require('../../../assets/images/auth_bg.png')}/>
+                    source={require('../../../assets/images/auth_bg.png')} />
             </View>
             <View style={styles.container}>
-                <TouchableOpacity style={[styles.defaultButton1, {marginLeft: 5, marginRight: 5}]}>
-                    <Text style={{textAlign: 'center', fontSize: 13, color: '#fff', fontWeight: 'bold'}}>Viewed</Text>
+                <TouchableOpacity style={[styles.defaultButton1, { marginLeft: 5, marginRight: 5 }]}>
+                    <Text style={{ textAlign: 'center', fontSize: 13, color: '#fff', fontWeight: 'bold' }}>Viewed</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.defaultButton2, {marginLeft: 5, marginRight: 5}]}>
-                    <Text style={{textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold'}}>Not
+                <TouchableOpacity style={[styles.defaultButton2, { marginLeft: 5, marginRight: 5 }]}>
+                    <Text style={{ textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold' }}>Not
                         Viewed</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.defaultButton2, {marginLeft: 5, marginRight: 5}]}>
-                    <Text style={{textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold'}}>Hold</Text>
+                <TouchableOpacity style={[styles.defaultButton2, { marginLeft: 5, marginRight: 5 }]}>
+                    <Text style={{ textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold' }}>Hold</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.defaultButton2, {marginLeft: 5, marginRight: 5}]}>
-                    <Text style={{textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold'}}>Solved</Text>
+                <TouchableOpacity style={[styles.defaultButton2, { marginLeft: 5, marginRight: 5 }]}>
+                    <Text style={{ textAlign: 'center', fontSize: 13, color: 'black', fontWeight: 'bold' }}>Solved</Text>
                 </TouchableOpacity>
             </View>
             <ScrollView>
-                
-        {
-                                complain && complain.map((complain, key) => {
-                                    return (<>
-                <View style={styles.card}>
-                    <View style={{flexDirection: 'column', padding: 5, marginTop: 5}}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            <Text style={[styles.HraderStyle, {fontWeight: 'bold',fontSize:14}]}>Customer Request {key+1}</Text>
-                            <Text style={styles.HraderStyle}>{complain.viewStatus}</Text>
-                        </View>
-                        <View style={{alignItems: 'flex-end', marginTop: -30}}>
-                            <TouchableOpacity onPress={() => {
-                                naviation.navigate("CustomerReq2",{ navigate: complain})
-                            }}>
-                                <Text style={{textAlign: 'center', fontSize: 16, color: 'black'}}><Icon name="login"
-                                                                                                        size={30}
-                                                                                                        color="black"/></Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-
-                
-              
-          </>  
-          )
-      })
-  }
-                
+                {
+                    complain && complain.map((complain) => {
+                        return (<>
+                            <View style={styles.card}>
+                                <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                                    <View style={{ alignItems: 'flex-start' }}>
+                                        <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }}>Solar Agent | {complain.agent}</Text>
+                                        <Text style={styles.HraderStyle}>Type | {complain.connection} </Text>
+                                        <Text style={styles.HraderStyle}>Quantity | {complain.qty} </Text>
+                                        <Text style={styles.HraderStyle}>Description | {complain.description}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </>)
+                    })
+                }
             </ScrollView>
         </View>
-
-
     );
 }
 

@@ -12,12 +12,12 @@ const Register = ()=>{
 
   function  handleChange(e,value){
         fileds[value]=e
-        setFields(fileds)
+        setFields((p)=>{return{...p,[value]:e}})
         console.log(fileds)
     }
 
     function post() {
-        ToastAndroid.show("Success !", ToastAndroid.SHORT)
+        // ToastAndroid.show("Success !", ToastAndroid.SHORT)
         addUser(fileds)
     }
 
@@ -40,7 +40,7 @@ const Register = ()=>{
                         <TextInput style={styles.textInput} onChangeText={e=>handleChange(e,"mail")} placeholder="Your email address"/>
                     </View>
                     <View style={styles.formInput}>
-                        <TextInput style={styles.textInput}onChangeText={e=>handleChange(e,"passowrd")} placeholder="Password" secureTextEntry={true}/>
+                        <TextInput style={styles.textInput}onChangeText={e=>handleChange(e,"password")} placeholder="Password" secureTextEntry={true}/>
                     </View>
                     <View style={styles.formInput}>
                         <TextInput style={styles.textInput} placeholder="Confirm Password" secureTextEntry={true}/>
@@ -49,8 +49,8 @@ const Register = ()=>{
                         <TextInput style={styles.textInput} onChangeText={e=>handleChange(e,"address")} placeholder="Address" secureTextEntry={true}/>
                     </View>
                     <View style={styles.select}>
-                     <Picker  onValueChange={e=>handleChange(e,"userType")}>
-                         {/* <Picker.Item label={fileds["userType"]} /> */}
+                     <Picker value={fileds.userType}  onValueChange={e=>handleChange(e,"userType")}>
+                          <Picker.Item label="Select User Type" value=""/>
 		                 <Picker.Item label="Customer" value="Customer" />
 		                 <Picker.Item label="Solar Agent" value="Agent"/>
                          <Picker.Item label="Electricity Boad" value="Boad"/>

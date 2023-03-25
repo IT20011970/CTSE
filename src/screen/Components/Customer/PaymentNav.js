@@ -8,17 +8,17 @@ import PaymentSub3 from "./PaymentSub3";
 
 const Stack1 = createNativeStackNavigator();
 
-const PaymentNav = ()=>{
+const PaymentNav = () => {
     return (
     <NavigationContainer independent={true}>
-        <Stack1.Navigator>
+        <Stack1.Navigator initialRouteName="PaymentMain">
         <Stack1.Screen options={{headerShown:false}} name="PaymentMain" component={Payment} />
         <Stack1.Screen options={{headerShown:false}} name="paymentSub" component={PaymentSub} />
         <Stack1.Screen options={{headerShown:false}} name="paymentSub2" component={PaymentTab2} />
         <Stack1.Screen options={{headerShown:false}} name="paymentSub3" component={PaymentSub3} />
         </Stack1.Navigator> 
     </NavigationContainer>
-    )
+    );
 }
 
 export default PaymentNav;

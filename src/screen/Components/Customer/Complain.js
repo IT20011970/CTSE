@@ -1,5 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
 import React from 'react';
+import useFocusEffect from 'react-native'
 import {
     Image,
     ImageBackground,
@@ -23,7 +24,7 @@ const Complain = () => {
     React.useEffect(()=>{
         f()
        })
-  
+ 
        async function f(){
         try {
             const value = await  AsyncStorage.getItem('fields')
@@ -40,10 +41,11 @@ const Complain = () => {
     function  handleChange(e,value){
         fileds[value]=e
         setFields(fileds)
+        setFields((p)=>{return{...p,[value]:e}})
         console.log(fileds)
     }
     function  emptyField(){
-        setFields(()=>{return{}})
+        setFields({})
         console.log(fileds)
     }
 
@@ -64,10 +66,10 @@ const Complain = () => {
             </View>
             <View style={{padding:10}}>
                 <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} value={name}  placeholder="From"/>
+                    <TextInput style={styles.textInput} value={fileds.From}  placeholder="From" onChangeText={e => handleChange(e,"From")}/>
                 </View>
                 <View style={styles.formInput}>
-                    <TextInput style={styles.textInput} placeholder="To" onChangeText={e => handleChange(e,"To")}/>
+                    <TextInput style={styles.textInput} placeholder="To"  value={fileds.To} onChangeText={e => handleChange(e,"To")}/>
                 </View>
                 <View style={styles.select}>
                 <Picker onValueChange={e=>handleChange(e,"type")} >
@@ -77,7 +79,7 @@ const Complain = () => {
                 </Picker>
                 </View>
                 <View style={styles.formInput}>
-                <TextInput style={styles.textInput} placeholder="Complain"  onChangeText={e => handleChange(e,"Complain")}/>
+                <TextInput style={styles.textInput} placeholder="Complain" value={fileds.Complain} onChangeText={e => handleChange(e,"Complain")}/>
                 </View>
                 <View style={styles.formInput}>
                     <TouchableOpacity style={styles.defaultButton} onPress={post}>
