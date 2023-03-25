@@ -11,45 +11,91 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {useNavigation} from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
+import {UpdateTeam} from "../../../Api/Api";
 
-const PanelServicesTab2 = () => {
+const PanelServicesTab2 = ({ route }) => {
+    const [complain, setComplain] = React.useState([])
+    console.log(Object.keys(route.params.complain.Member).length)
+    console.log(route.params.complain.Team)
+    const [fileds,setFields]=React.useState({})
+
+    function  handleChange(e,value){
+        // fileds[value]=e
+        setFields((r)=>{return{...r,[value]:e}})
+        console.log(fileds)
+    }
+    function post() {
+        UpdateTeam(fileds,route.params.complain.Team )
+    }
+    React.useEffect(() => {
+        const arr = []
+        var x;
+        for (x = 0; x < Object.keys(route.params.complain.Member).length; x++) {
+            // console.log(route.params.complain.Member)
+            arr.push({
+                data: route.params.complain.Member[Object.keys(route.params.complain.Member)[x]]
+            })
+            console.log(route.params.complain.Member[Object.keys(route.params.complain.Member)[x]])
+        }
+
+        setComplain(arr)
+    }, [])
+    //  console.log(route.params.complain.Member)
     const naviation = useNavigation();
     return (<ScrollView>
-            <View>
-                <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
-                                 source={require('../../../assets/images/auth_bg.png')}/>
-            </View>
-            <View style={styles.card}>
-                <View style={{flexDirection: 'column', padding: 5, marginTop: 5}}>
-                    <View style={{alignItems: 'flex-start'}}>
-                        <Text style={[styles.HraderStyle,{fontWeight:'bold'}]}>Customer Request</Text>
-                        <Text style={[styles.HraderStyle,{fontWeight:'bold'}]}>Check Panel</Text>
-                        <Text style={styles.HraderStyle}>Check Inverter</Text>
+        <View>
+            <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
+                source={require('../../../assets/images/auth_bg.png')} />
+        </View>
+        <View style={styles.card}>
+            <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                <View style={{ alignItems: 'flex-start' }}>
+                    <Text style={[styles.HraderStyle, { fontWeight: 'bold', marginTop: 0 }]}>Team</Text>
+                </View>
+                <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
+                    <View style={{ flexDirection: 'row', }} >
+                        <TextInput style={styles.textInput} placeholder={route.params.complain.Team }/>
                     </View>
-                    {/*<View style={{alignItems:'flex-end',marginTop:-30}}>*/}
-                    {/*<TouchableOpacity>*/}
-                    {/*<Text style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>*/}
-                    {/*</TouchableOpacity>*/}
-                    {/**/}
-                    {/*</View>*/}
                 </View>
             </View>
+            {
+                complain && complain.map((complain, key) => {
+                    return (<>
+                        <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                            <View style={{ alignItems: 'flex-start' }}>
+                                <Text style={[styles.HraderStyle, { fontWeight: 'bold', marginTop: 0 }]}>Member{key + 1}</Text>
+                            </View>
+                            <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
+                                {/* <TouchableOpacity>
+                                    <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login" size={30} color="black" /></Text>
+                                </TouchableOpacity> */}
+                                <View style={{ flexDirection: 'row', }} key={key}>
+                                    <TextInput style={styles.textInput} placeholder={complain.data} onChangeText={e => handleChange(e,`Person${key}`)} />
+                                </View>
 
-            <View style={{margin: 10, flexDirection: 'row'}}>
-                <TouchableOpacity style={[styles.defaultButton1,{marginRight: 5}]}>
-                    <Text style={{textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold'}}
-                          onPress={() => {
-                              naviation.navigate("Services")
-                          }}>Back</Text>
-                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </>
+                    )
+                })
+            }
+        </View>
 
-                <TouchableOpacity style={[styles.defaultButton1,{marginLeft: 5}]}>
+        <View style={{ margin: 10, flexDirection: 'row' }}>
+            <TouchableOpacity style={[styles.defaultButton1, { marginRight: 5 }]}>
+                <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold' }}
+                    onPress={() => {
+                        naviation.navigate("Services")
+                    }}>Back</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.defaultButton1,{marginLeft: 5}]}>
                     <Text
-                        style={{textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold'}}>Completed</Text>
+                        style={{textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold'}}onPress={() => {post()}}>Update</Text>
                 </TouchableOpacity>
-            </View>
-        </ScrollView>
+        </View>
+    </ScrollView>
 
     );
 }

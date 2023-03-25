@@ -11,7 +11,7 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {useNavigation} from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 
 const Repairs = () => {
     const naviation = useNavigation();
@@ -19,63 +19,63 @@ const Repairs = () => {
         <ScrollView>
             <View><View>
                 <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
-                                 source={require('../../../assets/images/auth_bg.png')}/>
+                    source={require('../../../assets/images/auth_bg.png')} />
             </View>
                 <View style={styles.card}>
-                    <View style={{flexDirection: 'column', padding: 5, marginTop: 5}}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Kamal</Text>
+                    <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                        <View style={{ alignItems: 'flex-start' }}>
+                            <Text style={[styles.HraderStyle, { fontWeight: 'bold', fontSize: 14 }]}>Kamal</Text>
                             <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
                             <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
                         </View>
-                        <View style={{alignItems: 'flex-end', marginTop: -30}}>
+                        <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
                             <TouchableOpacity>
-                                <Text style={{textAlign: 'center', fontSize: 16, color: 'black'}}><Icon name="login"
-                                                                                                        size={30}
-                                                                                                        color="black"/></Text>
+                                <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login"
+                                    size={30}
+                                    color="black" /></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-
                 <View style={styles.card}>
-                    <View style={{flexDirection: 'column', padding: 5, marginTop: 5}}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Nimal</Text>
+                    <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                        <View style={{ alignItems: 'flex-start' }}>
+                            <Text style={[styles.HraderStyle, { fontWeight: 'bold', fontSize: 14 }]}>Nimal</Text>
                             <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
                             <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
                         </View>
-                        <View style={{alignItems: 'flex-end', marginTop: -30}}>
+                        <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
                             <TouchableOpacity>
                                 <Text onPress={() => {
                                     naviation.navigate("PanelRepairs")
-                                }} style={{textAlign: 'center', fontSize: 16, color: 'black'}}><Icon name="login"
-                                                                                                     size={30}
-                                                                                                     color="black"/></Text>
+                                }} style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login"
+                                    size={30}
+                                    color="black" /></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-
                 <View style={styles.card}>
-                    <View style={{flexDirection: 'column', padding: 5, marginTop: 5}}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            <Text style={[styles.HraderStyle, {fontWeight: 'bold', fontSize: 14}]}>Sunil</Text>
+                    <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
+                        <View style={{ alignItems: 'flex-start' }}>
+                            <Text style={[styles.HraderStyle, { fontWeight: 'bold', fontSize: 14 }]}>Sunil</Text>
                             <Text style={styles.HraderStyle}>Contact Number : 077-1234567</Text>
                             <Text style={styles.HraderStyle}>Date : 12/10/2022</Text>
                         </View>
-                        <View style={{alignItems: 'flex-end', marginTop: -30}}>
+                        <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
                             <TouchableOpacity>
                                 <Text onPress={() => {
                                     naviation.navigate("PanelRepairs")
-                                }} style={{textAlign: 'center', fontSize: 16, color: 'black'}}><Icon name="login"
-                                                                                                     size={30}
-                                                                                                     color="black"/></Text>
+                                }} style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login"
+                                    size={30}
+                                    color="black" /></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
+          
             </View>
+            
         </ScrollView>
 
     );
