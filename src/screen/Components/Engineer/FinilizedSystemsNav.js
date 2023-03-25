@@ -14,8 +14,8 @@ const FinilizedSystemsNav = ()=>{
         <Stack1.Navigator>
         <Stack1.Screen options={{headerShown:false}} name="Finilized" component={Finilized}  />
         <Stack1.Screen options={{headerShown:false}} name="FinilizedTab2" component={FinilizedTab2} />
-        
-        </Stack1.Navigator> 
+        <Stack1.Screen options={{headerShown:false}} name="FinilizedTab3" component={FinilizedTab3} />
+        </Stack1.Navigator>
     </NavigationContainer>
     )
 }
