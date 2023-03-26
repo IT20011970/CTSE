@@ -77,11 +77,11 @@ import CustomerReqNav from './Components/Engineer/CustomerReqNav';
 const Drawer = createDrawerNavigator();
 
 const Home = ({ route }) => {
-  // const { navigate } = route.params;
-    //  const isLoggedIn=navigate
+  const { navigate } = route.params;
+     const isLoggedIn=navigate
 
-    const isLoggedIn=4
-    console.log("+++++++"+isLoggedIn+"---")
+    // const isLoggedIn=4
+    // console.log("+++++++"+isLoggedIn+"---")
 
     return (
         <Drawer.Navigator screenOptions={{ headerTintColor: '#fff',headerStyle: {
@@ -111,7 +111,7 @@ const Home = ({ route }) => {
            <Drawer.Screen name='View Complains' component={ViewComplains} />
            <Drawer.Screen name='Manage Bills' component={ManageBillsNav} />
            {/* <Drawer.Screen name='Pay Customer' component={PayCustomerNav} /> */}
-          </>):isLoggedIn=="4"?( <>
+          </>):isLoggedIn==4?( <>
             {/* <Drawer.Screen name='Order Products' component={OrderProductsNavB} /> */}
             <Drawer.Screen name='Sell Item' component={SellItemNav} />
             <Drawer.Screen name='Customer Order' component={CustomerOrderNav} /> 

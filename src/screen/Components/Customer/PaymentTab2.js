@@ -8,6 +8,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    ToastAndroid,
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -25,6 +26,18 @@ const PaymentTab2 = ({ route }) => {
         fileds[value]=e
         setFields(fileds)
         console.log(fileds)
+    }
+    function next(){
+        if ( fileds.NIC== '' || !/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/.test(fileds["NIC"])){
+            ToastAndroid.show("NIC is invalid!", ToastAndroid.SHORT)
+        }
+         if(fileds.Amount==''||isNaN(+fileds.Amount)){
+            ToastAndroid.show("Payment is invalid!", ToastAndroid.SHORT)
+        }
+        else{
+            naviation.navigate("paymentSub", { fileds})
+        }
+        
     }
     return (
         <ScrollView>
@@ -62,7 +75,7 @@ const PaymentTab2 = ({ route }) => {
                     <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Back</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.defaultButton1}>
-                    <Text onPress={() => naviation.navigate("paymentSub", { fileds})} style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Next ></Text>
+                    <Text onPress={() => next()} style={{ textAlign: 'center', fontSize: 16, color: '#fff' }}>Next ></Text>
                 </TouchableOpacity>
 
             </View>

@@ -8,6 +8,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    ToastAndroid,
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -27,6 +28,7 @@ const PaymentSub = ({ route }) => {
     function post() {
         console.log(route.params)
         AddPayment(fileds,route.params.fileds)
+        ToastAndroid.show("Payment is Success!", ToastAndroid.SHORT)
     }
     // console.log(route.params.data)
     return (

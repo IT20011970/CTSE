@@ -6,38 +6,55 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    TextInput,
+    TextInput, ToastAndroid,
     TouchableOpacity,
     View
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Entypo';
-import { useNavigation } from "@react-navigation/core";
+import {useNavigation} from "@react-navigation/core";
 import {AddTeam} from "../../../Api/Api";
 
 const PanelRepairsTab2 = () => {
     const naviation = useNavigation();
     const [team, setTeam] = React.useState([])
-    const [fileds,setFields]=React.useState({})
-    const [name,setName]=React.useState({})
+    const [fileds, setFields] = React.useState({})
+    const [name, setName] = React.useState({})
     var todos = []
-    function  handleChangeArray(value){
-        setTeam(oldArray => [...oldArray,value] )
+
+    function handleChangeArray(value) {
+        setTeam(oldArray => [...oldArray, value])
         console.log(team)
     }
-    function  handleChange(e,value){
+
+    function handleChange(e, value) {
         // fileds[value]=e
-        setFields((previous)=>{return{...previous,[value]:e}})
+        if (hasNumber(e)) {
+            ToastAndroid.show("Text cannot contain numbers", ToastAndroid.SHORT)
+        }
+        setFields((r) => {
+            return {...r, [value]: e}
+        })
         console.log(fileds)
     }
-    function  handleChangeName(e,value){
-        name[value]=e
+
+    function hasNumber(myString) {
+        return /[0-9]/.test(myString);;
+    }
+
+    function handleChangeName(e, value) {
+        if (hasNumber(e)) {
+            ToastAndroid.show("Text cannot contain numbers", ToastAndroid.SHORT)
+        }
+        name[value] = e
         setName(name)
         console.log(name)
     }
+
     function post() {
-        AddTeam(fileds,name)
+        AddTeam(fileds, name)
     }
+
     // useFocusEffect(
     //     React.useCallback(() => {
     //         if(team.length==0)
@@ -46,48 +63,51 @@ const PanelRepairsTab2 = () => {
     //         setFields({Person:"0"})
     //     })
     //   );
-    
+
 
     return (<ScrollView>
-        <View>
-            <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
-                source={require('../../../assets/images/auth_bg.png')} />
-        </View>
-        <View style={{ flexDirection: 'row', }}>
-            <TextInput style={styles.textInput} placeholder="Team name"  onChangeText={e => handleChangeName(e,"name")} />
-            <View style={styles.formInput}>
-            <View style={styles.formInput}>
-                            <TouchableOpacity style={styles.defaultButton}>
-                                <Text style={{ textAlign: 'center', fontSize: 20, color: '#fff' }} onPress={e => handleChangeArray(0)}>+</Text>
-                            </TouchableOpacity>
+            <View>
+                <ImageBackground style={styles.defaultBg} resizeMode={'cover'}
+                                 source={require('../../../assets/images/auth_bg.png')}/>
             </View>
-            </View>
-        </View>
-
-        {
-            team && team.map((team, key) => {
-                return (<>
-                    <View style={{ flexDirection: 'row', }} key={key}>
-                        <TextInput style={styles.textInput} placeholder="Officer Name" onChangeText={e => handleChange(e,`Person${key}`)} />
+            <View style={{flexDirection: 'row',}}>
+                <TextInput style={styles.textInput} placeholder="Team name"
+                           onChangeText={e => handleChangeName(e, "name")}/>
+                <View style={styles.formInput}>
+                    <View style={styles.formInput}>
+                        <TouchableOpacity style={styles.defaultButton}>
+                            <Text style={{textAlign: 'center', fontSize: 20, color: '#fff'}}
+                                  onPress={e => handleChangeArray(0)}>+</Text>
+                        </TouchableOpacity>
                     </View>
-                </>
-                )
-            })
-        }
+                </View>
+            </View>
 
-        <View style={{ margin: 10, flexDirection: 'row' }}>
-            {/* <TouchableOpacity style={[styles.defaultButton1, { marginRight: 5 }]}
+            {
+                team && team.map((team, key) => {
+                    return (<>
+                            <View style={{flexDirection: 'row',}} key={key}>
+                                <TextInput style={styles.textInput} placeholder="Officer Name"
+                                           onChangeText={e => handleChange(e, `Person${key}`)}/>
+                            </View>
+                        </>
+                    )
+                })
+            }
+
+            <View style={{margin: 10, flexDirection: 'row'}}>
+                {/* <TouchableOpacity style={[styles.defaultButton1, { marginRight: 5 }]}
                 onPress={() => {
                     naviation.navigate("Repairs")
                 }}>
                 <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold' }}>Back</Text>
             </TouchableOpacity> */}
 
-            <TouchableOpacity style={[styles.defaultButton1, { marginLeft: 5 }]} onPress={post}>
-                <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold' }} >Add Team</Text>
-            </TouchableOpacity>
-        </View>
-    </ScrollView>
+                <TouchableOpacity style={[styles.defaultButton1, {marginLeft: 5}]} onPress={post}>
+                    <Text style={{textAlign: 'center', fontSize: 16, color: '#fff', fontWeight: 'bold'}}>Add Team</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
 
     );
 }
@@ -123,7 +143,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         width: '80%',
         borderColor: "#a7a7a7",
-        borderRadius: 10
+        borderRadius: 10,
+        color: 'black'
     },
     card: {
         justifyContent: 'center',
@@ -156,6 +177,7 @@ const styles = StyleSheet.create({
     }, HraderStyle: {
         flex: 1,
         fontSize: 14,
+        color: 'black'
     }, defaultBg: {
         width: '100%',
         height: 70

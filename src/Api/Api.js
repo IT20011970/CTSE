@@ -95,7 +95,6 @@ export function getMeterOrder() {
 
     var todos = []
     const d = database().ref().child('Meters/')
-
     return d
 }
 
@@ -134,7 +133,9 @@ export function addUser(value) {
             const ref = database().ref().child('users/')
             ref.push({
                 email: value.mail,
-                userTyper: value.userType
+                userTyper: value.userType,
+                name: value.name,
+                address:value.address,
             })
             ToastAndroid.show("User account created  !", ToastAndroid.SHORT)
         })
@@ -161,7 +162,7 @@ export function AddBills(value) {
         AnountToPay: parseFloat(value.amount),
         description: value.description,
         customer: value.customer
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 
 export function login(value) {
@@ -185,14 +186,14 @@ export function AddOrderAditional(value, name) {
         TransCapacity: value.description,
         distance: value.distance,
         ReqCapacity: value.ReqCapacity
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 
 export function UpdateComplain(value, name) {
     const ref = database().ref().child(`Complain/${name}`)
     ref.update({
         reply: value.complain,
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 export function DeleteComplain(name) {
     const ref = database().ref().child(`Complain/${name}`).remove()
@@ -208,7 +209,7 @@ export function AddComplain(value, name) {
         to: value.To,
         complaintType: value.type,
         complain: value.Complain
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 
 export function AddTeam(value, name) {
@@ -217,7 +218,7 @@ export function AddTeam(value, name) {
     const ref = database().ref().child(`Team/${name.name}`)
     ref.set({
         value
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 
 export function UpdateTeam(value, name) {
@@ -253,7 +254,7 @@ export function AddPayment(value, name) {
         expire: value.expire,
         number: value.number,
         type: value.type
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 
 }
 
@@ -284,7 +285,7 @@ export function Products(value, name) {
         agent: value.agent,
         qty: value.qty,
         connection: value.connection,
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
     // console.log(value)
     // const requestOptions = {
     //     method: 'PUT',
@@ -310,7 +311,7 @@ export function Meters(value, name) {
         type: value.type,
         description: value.description,
         address: value.address,
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 }
 
 export function AddItem(value) {
@@ -332,7 +333,7 @@ export function UpdateItem(value, key) {
         qty: value.qty,
         description: value.description,
         name: value.name
-    })
+    }).catch(error=>ToastAndroid.show("error", ToastAndroid.SHORT))
 
 }
 

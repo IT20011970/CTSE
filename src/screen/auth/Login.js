@@ -43,6 +43,12 @@ const Login = ()=>{
                 console.log(doc.val().userTyper=="Boad")
                 if(doc.val().userTyper=="Boad")
                 naviation.navigate("Home",{ navigate: 3})
+                else if(doc.val().userTyper=="Customer")
+                naviation.navigate("Home",{ navigate: 1})
+                else if(doc.val().userTyper=="Agent")
+                naviation.navigate("Home",{ navigate: 4})
+                else
+                naviation.navigate("Home",{ navigate: 2})
             })
            })
            

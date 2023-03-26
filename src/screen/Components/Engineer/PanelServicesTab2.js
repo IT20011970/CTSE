@@ -34,6 +34,7 @@ const PanelServicesTab2 = ({ route }) => {
         for (x = 0; x < Object.keys(route.params.complain.Member).length; x++) {
             // console.log(route.params.complain.Member)
             arr.push({
+                id:Object.keys(route.params.complain.Member)[x],
                 data: route.params.complain.Member[Object.keys(route.params.complain.Member)[x]]
             })
             console.log(route.params.complain.Member[Object.keys(route.params.complain.Member)[x]])
@@ -55,7 +56,7 @@ const PanelServicesTab2 = ({ route }) => {
                 </View>
                 <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
                     <View style={{ flexDirection: 'row', }} >
-                        <TextInput style={styles.textInput} placeholder={route.params.complain.Team }/>
+                        <TextInput style={styles.textInput} placeholderTextColor='black' placeholder={route.params.complain.Team }/>
                     </View>
                 </View>
             </View>
@@ -71,7 +72,7 @@ const PanelServicesTab2 = ({ route }) => {
                                     <Text style={{ textAlign: 'center', fontSize: 16, color: 'black' }}><Icon name="login" size={30} color="black" /></Text>
                                 </TouchableOpacity> */}
                                 <View style={{ flexDirection: 'row', }} key={key}>
-                                    <TextInput style={styles.textInput} placeholder={complain.data} onChangeText={e => handleChange(e,`Person${key}`)} />
+                                    <TextInput style={styles.textInput} placeholderTextColor='black' placeholder={complain.data} onChangeText={e => handleChange(e,complain.id)} />
                                 </View>
 
                             </View>
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         width: '80%',
         borderColor: "#a7a7a7",
-        borderRadius: 10
+        borderRadius: 10,
+        color: 'black'
     },
     card: {
         justifyContent: 'center',
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
     }, HraderStyle: {
         flex: 1,
         fontSize: 14,
+        color: 'black'
     }, defaultBg: {
         width: '100%',
         height: 70

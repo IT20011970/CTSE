@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/core";
-import { getData } from "../../../Api/Api";
+import { getData,DeleteComplain } from "../../../Api/Api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const ComplainTab2 = () => {
     const naviation = useNavigation();
@@ -24,6 +24,7 @@ const ComplainTab2 = () => {
 
     async function deleteData(data){
         console.log(data)
+        DeleteComplain(data)
     }
     async function f() {
         try {
