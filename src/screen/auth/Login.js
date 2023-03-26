@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Image,ToastAndroid, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View  } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Item123,login } from "../../Api/Api";
+import db from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 const Login = ()=>{
 
     const [fileds,setFields]=React.useState({})
@@ -30,15 +32,45 @@ const Login = ()=>{
     }
 
     const post = async () => {
-        try {
-            await AsyncStorage.setItem('fields', JSON.stringify(fileds))
-          } catch (e) {
-
-          }
-          login(fileds).then(r=>{
-                 naviation.navigate("Home",{ navigate: r})
-                ToastAndroid.show("Success !", ToastAndroid.SHORT)
+        auth()
+        .signInWithEmailAndPassword(fileds.Email, fileds.Password)
+        .then(() => {
+            // naviation.navigate("Home",{ navigate: r})
+           
+            // naviation.navigate("Home",{ navigate: r})
+           const data= db().ref().child('users').orderByChild('email').equalTo(fileds.Email).on('value', querySnapshot => {
+            querySnapshot.forEach((doc) => {
+                console.log(doc.val().userTyper=="Boad")
+                if(doc.val().userTyper=="Boad")
+                naviation.navigate("Home",{ navigate: 3})
+                else if(doc.val().userTyper=="Customer")
+                naviation.navigate("Home",{ navigate: 1})
+                else if(doc.val().userTyper=="Agent")
+                naviation.navigate("Home",{ navigate: 4})
+                else
+                naviation.navigate("Home",{ navigate: 2})
+            })
+           })
+           
+           ToastAndroid.show("Success !", ToastAndroid.SHORT)  
+            // collection('users').where( 'phoneNumber', "in", data.phoneNumbers)
+            // naviation.navigate("Home",{ navigate: 1})
+        // ToastAndroid.show("User account created  !", ToastAndroid.SHORT)
         })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            ToastAndroid.show("That email address is already in use  !", ToastAndroid.SHORT)
+          }
+      
+          if (error.code === 'auth/invalid-email') {
+            ToastAndroid.show("hat email address is invalid!", ToastAndroid.SHORT)
+          }
+          else{
+            ToastAndroid.show("error", ToastAndroid.SHORT)
+          }
+          
+        })
+   
         
       }
     // function post() {
@@ -66,10 +98,10 @@ const Login = ()=>{
                         </View>
                     </View>
                     <View style={styles.formInput}>
-                        <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"mail")} placeholder="Your email address"/>
+                        <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"Email")} placeholder="Your email address"/>
                     </View>
                     <View style={styles.formInput}>
-                        <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"passowrd")} placeholder="Password" secureTextEntry={true}/>
+                        <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"Password")} placeholder="Password" secureTextEntry={true}/>
                     </View>
                     <View style={styles.formInput}>
                         <TouchableOpacity onPress={()=>{ naviation.navigate("Forget") }}>

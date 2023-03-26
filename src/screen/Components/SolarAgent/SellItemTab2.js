@@ -77,7 +77,7 @@ const SellItemTab2 = () => {
                 </View>
                 <View style={{margin:10,alignItems:'center'}}>
                     <TouchableOpacity style={styles.defaultButton1} onPress={post}>
-                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}} onPress={()=>{naviation.navigate("SellItemTab1")}}>Add</Text>
+                        <Text style={{textAlign:'center',fontSize:16,color:'#fff'}} >Add</Text>
                     </TouchableOpacity>
                 </View>
         </View>

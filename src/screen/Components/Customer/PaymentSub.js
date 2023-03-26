@@ -8,6 +8,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    ToastAndroid,
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -15,7 +16,7 @@ import { useNavigation } from "@react-navigation/core";
 import {AddPayment} from "../../../Api/Api";
 
 const PaymentSub = ({ route }) => {
-    console.log(route.params.fileds)
+    console.log(route.params)
     const naviation=useNavigation();
     const [fileds,setFields]=React.useState({})
     
@@ -25,8 +26,9 @@ const PaymentSub = ({ route }) => {
         console.log(fileds)
     }
     function post() {
-        console.log(route.Amount)
+        console.log(route.params)
         AddPayment(fileds,route.params.fileds)
+        ToastAndroid.show("Payment is Success!", ToastAndroid.SHORT)
     }
     // console.log(route.params.data)
     return (

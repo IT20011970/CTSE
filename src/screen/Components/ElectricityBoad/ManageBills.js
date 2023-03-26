@@ -39,16 +39,14 @@ const ManageBills = () => {
             <Text style={{fontSize: 20,fontWeight:'600',margin:20}}>Bill Details</Text>
             <View style={styles.formInput}>
                       <View style={styles.formInput}>
-                        <TextInput style={styles.textInput}onChangeText={e=>handleChange(e,"customer")} placeholder="customer" />
+                        <TextInput style={styles.textInput}onChangeText={e=>handleChange(e,"customer")} placeholder="Customer NIC" />
                     </View>
                         <TextInput style={styles.textInput} onChangeText={e => handleChange(e,"amount")} placeholder="Amount"/>
                     </View>
                    <View style={styles.formInput}>
                         <TextInput style={styles.textInput} onChangeText={e=>handleChange(e,"description")} placeholder="Description"/>
                     </View>
-                    <View style={styles.formInput}>
-                        <TextInput style={styles.textInput}onChangeText={e=>handleChange(e,"status")} placeholder="status" />
-                    </View>
+
             <View style={{margin:10, flexDirection: 'row'}}>
                     <TouchableOpacity style={styles.defaultButton1}onPress={()=>{naviation.navigate("ManageBills2")}}>
                         <Text style={{textAlign:'center',fontSize:16,color:'#fff'}}>Bill Payments</Text>

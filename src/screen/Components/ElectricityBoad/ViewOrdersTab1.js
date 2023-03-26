@@ -56,7 +56,7 @@ const ViewOrders = () => {
                                 <View style={{ flexDirection: 'column', padding: 5, marginTop: 5 }}>
                                     <View style={{ alignItems: 'flex-start' }}>
                                         <Text style={{ flex: 1, fontSize: 14, fontWeight: '600' }}>Orders</Text>
-                                        <Text style={styles.HraderStyle}>Type |{complain.type} Description | {complain.description}</Text>
+                                        <Text style={styles.HraderStyle}>{complain.address} District | {complain.description}</Text>
                                     </View>
                                     <View style={{ alignItems: 'flex-end', marginTop: -30 }}>
                                         <TouchableOpacity onPress={() => { naviation.navigate("ViewOrder2") }}>

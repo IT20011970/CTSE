@@ -51,16 +51,16 @@ const ViewOrdersTab2 = () => {
             </View>
             <Text style={{ flex: 1,fontSize: 20,fontWeight:'600',margin:20}}>View Orders</Text>
             {
-            complain && complain.map((complain) => {
+            complain && complain.map((complain,key) => {
                 return (<>
                  <View style={styles.card}>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3}}>
-        <Text style={{ flex: 1,fontSize: 16,fontWeight:'600',margin:20}}>Customer Id # </Text>
+        <Text style={{ flex: 1,fontSize: 16,fontWeight:'600',margin:20}}>Customer Id # {key+1}</Text>
                 
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
-                    <Text style={styles.HraderStyle}>Customer</Text>
-                    <Text style={styles.HraderStyle}>:{complain.customer}</Text>
+                    <Text style={styles.HraderStyle}>Customer Type</Text>
+                    <Text style={styles.HraderStyle}>:{complain.type}</Text>
             </View>
             <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>
                     <Text style={styles.HraderStyle}>Location</Text>

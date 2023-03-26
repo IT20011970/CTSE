@@ -43,7 +43,7 @@ const ViewOrdersTab3 = ({ route }) => {
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5, borderRadius : 3 ,margin:10}}>
        <Text style={styles.HraderStyle}>Transformer Capacity</Text>
-       <TextInput style={styles.textInput} placeholder="Item" onChangeText={e => handleChange(e,"description")}/>
+       <TextInput style={styles.textInput}  onChangeText={e => handleChange(e,"description")}/>
                         
 </View>
 <View style={{ flexDirection: 'row',  padding: 5, marginTop: 5,borderRadius : 3 ,margin:10}}>

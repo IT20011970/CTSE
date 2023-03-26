@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/core";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {getOrderData} from "../../../Api/Api";
+import {getData, getSolarData} from "../../../Api/Api";
 import  AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -25,17 +25,32 @@ var data;
 React.useEffect(()=>{
     f()
    },[])
-   async function f(){
+
+   async function f() {
     try {
-        const value = await  AsyncStorage.getItem('fields')
+        const value = await AsyncStorage.getItem('fields')
         if (value !== null) {
-            
-            data =JSON.parse(value).mail;
-            getOrderData(data).then(r=> setComplain(r));
-            console.log("++++++"+complain)
+
+            // data =JSON.parse(value).mail;
+            const data = await getSolarData(data)
+            data.on('value', querySnapshot => {
+                const todos = []
+                console.log(querySnapshot)
+                querySnapshot.forEach((doc) => {
+                    todos.push({
+                        key:doc.key,
+                        qty: doc.val().qty,
+                        description: doc.val().description,
+                        connection: doc.val().connection
+                    })
+                })
+                setComplain(todos)
+            })
+            // console.log(data)
         }
+        console.log(complain)
     }
-    catch{
+    catch {
 
     }
 }
@@ -54,8 +69,8 @@ React.useEffect(()=>{
                                      <View style={{ flexDirection: 'column',  padding: 5, marginTop: 5 }}>
                                         <View style={{alignItems:'flex-start'}}>
                                              <Text style={{ flex: 1,fontSize: 14,fontWeight:'600'}}>{complain.customer}</Text>
-                                             <Text style={styles.HraderStyle}>{complain.name} | {complain.qty}</Text>
-                                             <Text style={styles.HraderStyle}>{complain.address}</Text>
+                                             <Text style={styles.HraderStyle}>{complain.connection} | {complain.qty}</Text>
+                                             <Text style={styles.HraderStyle}>{complain.description}</Text>
                                          </View>
                                          <View style={{alignItems:'flex-end',marginTop:-30}}>
                                      <TouchableOpacity>

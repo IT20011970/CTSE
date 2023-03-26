@@ -17,7 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PaymentSub from './PaymentSub';
 
 const Stack1 = createNativeStackNavigator();
-import {getData} from "../../../Api/Api";
+import {getPayment} from "../../../Api/Api";
 import  AsyncStorage from '@react-native-async-storage/async-storage';
 
 const  Payment = () => {
@@ -27,23 +27,28 @@ const  Payment = () => {
     var data;
     React.useEffect(()=>{
         f()
-       })
+       },[])
        async function f(){
-      
-                
+            
         try {
-            const value = await  AsyncStorage.getItem('fields')
-            if (value !== null) {
-                
-                data =JSON.parse(value).mail;
-                getData(data).then(r=> setComplain(r.payments));
-                
-            }
+            const data = await getPayment(data)
+            data.on('value', querySnapshot => {
+                const todos = []
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.key)
+                    todos.push({
+                        key:doc.key,
+                        AmountToPay: doc.val().AnountToPay,
+                        CustomerNIC: doc.val().customer,
+                        description: doc.val().description
+                    })
+                })
+                setComplain(todos)
+            })
         }
-        catch{
+        catch {
 
         }
-    
       
     }
 
@@ -77,11 +82,11 @@ const  Payment = () => {
                 <View style={{alignItems:'flex-start'}}>
                     <Text  style={{flex: 1,fontSize: 16,fontWeight:'600'}}>Pay Slip Id #{key+1}</Text>
                     <Text style={styles.HraderStyle}>Description:{complain.description}</Text>
-                    <Text style={styles.HraderStyle}>Amount: LKR {complain.amount}</Text>
+                    <Text style={styles.HraderStyle}>Amount: LKR {complain.AmountToPay}</Text>
                 </View>
                 <View style={{alignItems:'flex-end',marginTop:-30}}>
                     <TouchableOpacity>
-                        <Text  onPress={()=>{naviation.navigate("paymentSub2")}} style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
+                        <Text  onPress={()=>naviation.navigate("paymentSub2",{complain})}style={{textAlign:'center',fontSize:16,color:'black'}}><Icon name="login"  size={30} color="black" /></Text>
                      </TouchableOpacity>
                 </View>
             </View>
@@ -93,7 +98,7 @@ const  Payment = () => {
            
 
         
-            <View style={styles.formInput}>
+            {/* <View style={styles.formInput}>
                     <TextInput style={styles.textInput} keyboardType="numeric" placeholder="Payment Amount" onChangeText={e => handleChange(e,"Amount")}/>
             </View>
             <View style={styles.formInput}>
@@ -104,7 +109,7 @@ const  Payment = () => {
             <TouchableOpacity style={styles.defaultButton1}>
                         <Text onPress={()=>naviation.navigate("paymentSub",{ fileds})} style={{textAlign:'center',fontSize:16,color:'#fff'}}>Next ></Text>
             </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
          </ScrollView>
     );

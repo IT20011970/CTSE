@@ -39,7 +39,7 @@ const PanelRepairsTab2 = () => {
     }
 
     function hasNumber(myString) {
-        return /\d/.test(myString);
+        return /[0-9]/.test(myString);;
     }
 
     function handleChangeName(e, value) {

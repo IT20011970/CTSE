@@ -7,6 +7,7 @@ import {
     StyleSheet,
     Text,
     TextInput,
+    ToastAndroid,
     TouchableOpacity,
     View
 } from 'react-native';
@@ -49,7 +50,27 @@ const OrderTab2 = () => {
 
     function post() {
         console.log(name)
-        Meters(fileds,name)
+       
+        if(fileds.type==""){
+            ToastAndroid.show("Please Fill Meter Type!", ToastAndroid.SHORT)
+        }
+        if(fileds.description==""){
+            ToastAndroid.show("Please Fill Description!", ToastAndroid.SHORT)
+        }
+        if(fileds.address==""){
+            ToastAndroid.show("Please Fill Address!", ToastAndroid.SHORT)
+        }
+        else{
+            try{
+                Meters(fileds,name)
+                ToastAndroid.show("Success", ToastAndroid.SHORT)
+            }
+            catch(e)
+            {
+                ToastAndroid.show(e, ToastAndroid.SHORT)
+            }
+
+        }
         
     }
     return (

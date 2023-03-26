@@ -77,45 +77,45 @@ import CustomerReqNav from './Components/Engineer/CustomerReqNav';
 const Drawer = createDrawerNavigator();
 
 const Home = ({ route }) => {
-  // const { navigate } = route.params;
-    const isLoggedIn=3
+  const { navigate } = route.params;
+     const isLoggedIn=navigate
 
-    
-    console.log("+++++++"+isLoggedIn+"---")
+    // const isLoggedIn=4
+    // console.log("+++++++"+isLoggedIn+"---")
 
     return (
         <Drawer.Navigator screenOptions={{ headerTintColor: '#fff',headerStyle: {
          backgroundColor: '#2C4F77', 
 }}} drawerContent={(props) => <CustomSidebarMenu {...props} />}>
            {isLoggedIn===1 ? (<>
-         <Drawer.Screen name='Sheduled Items' component={SheduledItems} />
+         {/* <Drawer.Screen name='Sheduled Items' component={SheduledItems} /> */}
          <Drawer.Screen name='Complain' component={CompalinNav} />
          <Drawer.Screen name='Payment' component={PaymentNav} />
          <Drawer.Screen name='Search Products' component={Solar} />
-         <Drawer.Screen name='Redundant power' component={Redundant} />
-         <Drawer.Screen name='Estimaed Bill' component={EstimatedBill} />
+         {/* <Drawer.Screen name='Redundant power' component={Redundant} /> */}
+         {/* <Drawer.Screen name='Estimaed Bill' component={EstimatedBill} /> */}
          <Drawer.Screen name='Order Products' component={OderNavCus} />
            </>
         ) :isLoggedIn==2? (<>
-                    <Drawer.Screen name='Customer Requirements' component={CustomerReqNav} />
-                    <Drawer.Screen name='Off Grid Solar Usage' component={OffGridNav} />
-                    <Drawer.Screen name='On Grid Solar Usage' component={OnGridNav} />
-                    <Drawer.Screen name='Finalized Systems' component={FinilizedSystemsNav} />
+                    <Drawer.Screen name='Customer Requirements' component={CustomerRequirements} />
+                    {/* <Drawer.Screen name='Off Grid Solar Usage' component={OffGridNav} />
+                    <Drawer.Screen name='On Grid Solar Usage' component={OnGridNav} /> */}
+                    {/* <Drawer.Screen name='Finalized Systems' component={FinilizedSystemsNav} /> */}
                     <Drawer.Screen name='Panel Services' component={PanelServicesNav} />
                     <Drawer.Screen name='Panel Repairs' component={PanelRepairsNav} />
           
         </>
           ):isLoggedIn==3?(<>
-           <Drawer.Screen name='Redundant Power' component={RedundantPower} />
+           {/* <Drawer.Screen name='Redundant Power' component={RedundantPower} /> */}
            <Drawer.Screen name='View Orders' component={ViewOrdersNav} />
            <Drawer.Screen name='View Complains' component={ViewComplains} />
            <Drawer.Screen name='Manage Bills' component={ManageBillsNav} />
-           <Drawer.Screen name='Pay Customer' component={PayCustomerNav} />
-          </>):isLoggedIn=="4"?( <>
-            <Drawer.Screen name='Order Products' component={OrderProductsNavB} />
+           {/* <Drawer.Screen name='Pay Customer' component={PayCustomerNav} /> */}
+          </>):isLoggedIn==4?( <>
+            {/* <Drawer.Screen name='Order Products' component={OrderProductsNavB} /> */}
             <Drawer.Screen name='Sell Item' component={SellItemNav} />
             <Drawer.Screen name='Customer Order' component={CustomerOrderNav} /> 
-            <Drawer.Screen name='Installation' component={InstallationNav} />
+            {/* <Drawer.Screen name='Installation' component={InstallationNav} /> */}
             <Drawer.Screen name='Customer Complain' component={ComplainAgent} />     
           </>):
           (<Drawer.Screen name='View Orders' component={ViewOrdersNav} />)}
